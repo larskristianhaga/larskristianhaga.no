@@ -1,0 +1,35 @@
+{
+    admin off
+    auto_https off
+}
+
+larskristianhaga.no:80 {
+    log {
+        output file /var/log/caddy/access.log
+        format json
+    }
+
+    root * /var/www/html
+    file_server
+
+    handle / {
+        rewrite * /
+    }
+
+    handle /robots.txt {
+        rewrite * /robots.txt
+    }
+
+    handle /sitemap.xml {
+        header Content-Type application/xml
+        rewrite * /sitemap.xml
+    }
+
+    handle /links {
+        rewrite * /links.html
+    }
+
+    handle_errors {
+        rewrite * /404.html
+    }
+}
